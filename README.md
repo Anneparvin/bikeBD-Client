@@ -54,9 +54,9 @@ Link:[https://github.com/Anneparvin/bikeShop-Server]
 
 
 **🔹 Frontend:** Deployed on **Vercel** 
-Link:[] 
+Link:[https://bikebd-client-nine.vercel.app/] 
 **🔹 Github:** Hosted on **Github** 
-Link:[]
+Link:[https://github.com/Anneparvin/bikeBD-Client]
 
 #Admin:
    "email": "shawonMallick@example.com",
