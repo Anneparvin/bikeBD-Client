@@ -73,11 +73,11 @@ const LoginAuth = () => {
                  console.log(user);
 
                   // Store token and user information in localStorage
-        localStorage.setItem("accessToken", token.trim());  // Store token directly (as a string)
-        localStorage.setItem("user", JSON.stringify(user)); // Store user object (as a string)
+        localStorage.setItem("accessToken", token.trim());  
+        localStorage.setItem("user", JSON.stringify(user)); 
 
-        console.log(localStorage.getItem("accessToken"));  // Should show the token without quotes
-        console.log(localStorage.getItem("user"));  // Should show the user object as a stringified JSON
+        console.log(localStorage.getItem("accessToken"));  
+        console.log(localStorage.getItem("user")); 
 
 
                 dispatch(setUser({ user, token }));

@@ -16,7 +16,6 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { ShoppingBagIcon } from "lucide-react";
 import { removeFromCart, updateQuantity } from "@/redux/features/cart/cartSlice";
-import { selectCurrentUser } from "@/redux/features/auth/AuthSlice";
 
 
 const CartSheet = () => {
@@ -28,34 +27,9 @@ const CartSheet = () => {
     const [createOrder, { isLoading, isSuccess, data, isError, error }] =
       useCreateOrderMutation();
   
-    // const handlePlaceOrder = async () => {
-    //   await createOrder({ products: cartData.items });
-    // };
-
     const handlePlaceOrder = async () => {
-      if (!cartData || cartData.items.length === 0) {
-        console.error("Cart is empty!");
-        return;
-      }
-    
-      const orderData = {
-        user: selectCurrentUser?.apply || "64f6b2c9e6a7b0e5c1d2a3b4", // Replace with actual user ID
-        products: cartData.items.map(item => ({
-          product: item._id, // Ensure this is the correct key
-          quantity: item.quantity
-        })),
-        totalPrice: cartData.items.reduce((total, item) => total + item.price * item.stock, 0),
-        status: "Pending"
-      };
-    
-      try {
-        await createOrder(orderData);
-        console.log("Order placed successfully!");
-      } catch (error) {
-        console.error("Error placing order:", error);
-      }
+      await createOrder({ products: cartData.items });
     };
-    
   
     const toastId = "cart";
     useEffect(() => {

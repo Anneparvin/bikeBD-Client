@@ -10,10 +10,10 @@ export type TCartItem = {
     name: string;
     price: number;
     model: string;
-    quantity: string;
     stock: number;
     status: string;
     type: string;
+    quqntity?:string
 };
 
 

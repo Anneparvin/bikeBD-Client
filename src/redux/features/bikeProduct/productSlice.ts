@@ -40,6 +40,7 @@ export interface TBike {
   type: TBikeType;
   description: string;
   stock: number;
+  quantity?:number
   status: TBikeStatus;
   isDeleted: boolean;
   bikeImage: string;

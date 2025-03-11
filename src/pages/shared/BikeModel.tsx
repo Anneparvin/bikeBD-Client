@@ -1,5 +1,4 @@
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,8 +9,8 @@ import { TBike } from "@/pages/types/index";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { toast } from "sonner";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addToCart, updateQuantity } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { addToCart } from "@/redux/features/cart/cartSlice";
 import { Link } from "react-router";
 
 interface TTitle {
@@ -21,15 +20,15 @@ interface TTitle {
 
 const BiModel = ({ title, id }: TTitle) => {
     const user = useSelector((state: RootState) => state.auth.user);
-    const cartItem = useAppSelector((state: RootState) => state.cart);
+    // const cartItem = useAppSelector((state: RootState) => state.cart);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { data: bi, isLoading, isError } = useGetProductByIdQuery(id);
-    const bicycle = bi?.data;
+    const bike = bi?.data;
     const dispatch = useAppDispatch();
     const [quantity, setQuantity] = useState<number>(1);
 
     const handleIncrement = () => {
-        if (quantity < bicycle.quantity) {
+        if (quantity < bike.quantity) {
             setQuantity((prev) => prev + 1);
         } else {
             toast.error("You cannot add more than available stock.");
@@ -54,14 +53,14 @@ const BiModel = ({ title, id }: TTitle) => {
             return;
         }
 
-        const productInCart = cartItem.items.find((item: any) => item._id === bi._id);
+        // const productInCart = cartItem.items.find((item: any) => item._id === bi._id);
 
-        if (productInCart) {
-            dispatch(updateQuantity({ id: bi._id, quantity }));
-            toast.success("Quantity updated successfully");
-            setIsDialogOpen(false);
-            return;
-        }
+        // if (productInCart) {
+        //     dispatch(updateQuantity({ id: bi._id,quantity}));
+        //     toast.success("Quantity updated successfully");
+        //     setIsDialogOpen(false);
+        //     return;
+        // }
 
         const toastId = toast.loading("Adding to cart...");
         dispatch(
@@ -91,8 +90,8 @@ const BiModel = ({ title, id }: TTitle) => {
         return <div>Error loading bicycle details.</div>;
     }
 
-    if (!bicycle) {
-        return <div>Bicycle not found.</div>;
+    if (!bike) {
+        return <div>Bike not found.</div>;
     }
 
     return (
@@ -103,7 +102,7 @@ const BiModel = ({ title, id }: TTitle) => {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[90%] md:max-w-3xl lg:max-w-4xl xl:max-w-6xl">
                     <DialogHeader>
-                        <DialogTitle className="text-center">Bicycle Products Details</DialogTitle>
+                        <DialogTitle className="text-center">Bike Products Details</DialogTitle>
                     </DialogHeader>
                     <div className="bg-gray-100 dark:bg-gray-800 py-4 md:py-8 rounded-md">
                         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -112,35 +111,35 @@ const BiModel = ({ title, id }: TTitle) => {
                                     <div className="h-64 md:h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
                                         <img
                                             className="w-full h-full object-cover rounded-lg"
-                                            src={bicycle.bicycleImage}
-                                            alt={bicycle.name}
+                                            src={bike.bikeImage}
+                                            alt={bike.name}
                                         />
                                     </div>
                                 </div>
 
                                 <div className="md:flex-1 px-4 flex flex-col">
-                                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{bicycle.name}</h2>
-                                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{bicycle.description}</p>
+                                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{bike.name}</h2>
+                                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{bike.description}</p>
 
                                     <div className="flex flex-col md:flex-row mb-4 gap-4 justify-between">
                                         <div>
                                             <span className="font-bold text-gray-700 dark:text-gray-300">Price:</span>
-                                            <span className="text-gray-600 dark:text-gray-300 ml-2">TK {bicycle.price}</span>
+                                            <span className="text-gray-600 dark:text-gray-300 ml-2">TK {bike.price}</span>
                                         </div>
                                         <div>
                                             <span className="font-bold text-gray-700 dark:text-gray-300">Status:</span>
-                                            <Badge variant="destructive" className="text-black ml-2">{bicycle.status}</Badge>
+                                            <Badge variant="destructive" className="text-black ml-2">{bike.status}</Badge>
                                         </div>
                                     </div>
 
                                     <div className="flex flex-col md:flex-row mb-4 gap-4 justify-between">
                                         <div>
                                             <span className="font-bold text-gray-700 dark:text-gray-300">Brand:</span>
-                                            <span className="text-gray-600 dark:text-gray-300 ml-2">{bicycle.brand}</span>
+                                            <span className="text-gray-600 dark:text-gray-300 ml-2">{bike.brand}</span>
                                         </div>
                                         <div>
                                             <span className="font-bold text-gray-700 dark:text-gray-300">Model:</span>
-                                            <span className="text-gray-600 dark:text-gray-300 ml-2">{bicycle.model}</span>
+                                            <span className="text-gray-600 dark:text-gray-300 ml-2">{bike.model}</span>
                                         </div>
                                     </div>
 
@@ -149,13 +148,13 @@ const BiModel = ({ title, id }: TTitle) => {
                                             <span className="font-bold text-gray-700 dark:text-gray-300">Available Stock:</span>
                                             <div className="flex flex-wrap items-center gap-2">
                                                 <div className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-1 px-3 rounded-full font-bold hover:bg-gray-400 dark:hover:bg-gray-600">
-                                                    {bicycle.quantity}
+                                                    {bike.quantity}
                                                 </div>
                                             </div>
                                         </div>
                                         <div>
                                             <span className="font-bold text-gray-700 dark:text-gray-300">Type:</span>
-                                            <span className="text-gray-600 dark:text-gray-300 ml-2">{bicycle.type}</span>
+                                            <span className="text-gray-600 dark:text-gray-300 ml-2">{bike.type}</span>
                                         </div>
                                     </div>
 
@@ -177,7 +176,7 @@ const BiModel = ({ title, id }: TTitle) => {
                                                 value={quantity}
                                                 onChange={(e) => {
                                                     const newQuantity = Number(e.target.value);
-                                                    if (newQuantity <= bicycle.quantity && newQuantity >= 1) {
+                                                    if (newQuantity <= bike.quantity && newQuantity >= 1) {
                                                         setQuantity(newQuantity);
                                                     } else {
                                                         toast.error("Quantity cannot exceed available stock.");
@@ -198,14 +197,14 @@ const BiModel = ({ title, id }: TTitle) => {
                                     <div className="mt-auto">
                                         <div className="flex  gap-4">
                                             <Button
-                                                onClick={() => handleAddToCart(bicycle)}
+                                                onClick={() => handleAddToCart(bike)}
                                                 className="block w-full rounded-sm bg-blue-800 text-sm font-medium transition hover:scale-105"
                                             >
                                                 Add to Cart
                                             </Button>
                                             <Link to="/customer/storermanagments">
                                                 <Button
-                                                    onClick={() => handleAddToCart(bicycle)}
+                                                    onClick={() => handleAddToCart(bike)}
                                                     className="block w-full rounded-sm bg-blue-800 text-sm font-medium transition hover:scale-105"
                                                 >
                                                     Buy Now
